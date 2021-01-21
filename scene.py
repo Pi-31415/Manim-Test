@@ -11,7 +11,7 @@ class OpeningManim(Scene):
         )
         self.wait()
 
-        transform_title = Tex("That was a transform by Pi")
+        transform_title = Tex("What if you are currently seeing the video you coded?")
         transform_title.to_corner(UP + LEFT)
         self.play(
             Transform(title, transform_title),
@@ -20,7 +20,7 @@ class OpeningManim(Scene):
         self.wait()
 
         grid = NumberPlane()
-        grid_title = Tex("This is a grid")
+        grid_title = Tex("Maths is awesome ")
         grid_title.scale(1.5)
         grid_title.move_to(transform_title)
 
