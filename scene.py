@@ -1,55 +1,30 @@
 from manim import *
 
-class OpeningManim(Scene):
+class MovingBraces(Scene):
     def construct(self):
-        title = Tex(r"This is some \LaTeX")
-        basel = MathTex(r"\sum_{n=1}^\infty \frac{1}{n^2} = \frac{\pi^2}{6}")
-        VGroup(title, basel).arrange(DOWN)
-        self.play(
-            Write(title),
-            FadeInFrom(basel, DOWN),
-        )
-        self.wait()
+        tex = MathTex(r'\pi').scale(5)
+        self.play(Write(tex))
+        self.wait(3)
+        self.play(FadeOut(tex))
 
-        transform_title = Tex("What if you are currently seeing the video you coded?")
-        transform_title.to_corner(UP + LEFT)
+        text=MathTex(
+            "\\frac{d}{dx}f(x)g(x)=",       #0
+            "f(x)\\frac{d}{dx}g(x)",        #1
+            "+",                            #2
+            "g(x)\\frac{d}{dx}f(x)"         #3
+        )
+        self.play(Write(text))
+        brace1 = Brace(text[1], UP, buff=SMALL_BUFF)
+        brace2 = Brace(text[3], UP, buff=SMALL_BUFF)
+        t1 = brace1.get_text("$g'f$")
+        t2 = brace2.get_text("$f'g$")
         self.play(
-            Transform(title, transform_title),
-            LaggedStart(*[FadeOutAndShift(obj, direction=DOWN) for obj in basel]),
-        )
+            GrowFromCenter(brace1),
+            FadeIn(t1),
+            )
         self.wait()
-
-        grid = NumberPlane()
-        grid_title = Tex("Maths is awesome ")
-        grid_title.scale(1.5)
-        grid_title.move_to(transform_title)
-
-        self.add(grid, grid_title)  # Make sure title is on top of grid
         self.play(
-            FadeOut(title),
-            FadeInFrom(grid_title, direction=DOWN),
-            ShowCreation(grid, run_time=3, lag_ratio=0.1),
-        )
-        self.wait()
-
-        grid_transform_title = Tex(
-            r"That was a non-linear function \\ applied to the grid"
-        )
-        grid_transform_title.move_to(grid_title, UL)
-        grid.prepare_for_nonlinear_transform()
-        self.play(
-            grid.animate.apply_function(
-                lambda p: p
-                          + np.array(
-                    [
-                        np.sin(p[1]),
-                        np.sin(p[0]),
-                        0,
-                    ]
-                )
-            ),
-            run_time=3,
-        )
-        self.wait()
-        self.play(Transform(grid_title, grid_transform_title))
+            ReplacementTransform(brace1,brace2),
+            ReplacementTransform(t1,t2)
+            )
         self.wait()
