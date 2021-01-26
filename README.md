@@ -5,8 +5,8 @@ Compile with the following command
 
 ```
 {
-  "firstName": "John",
-  "lastName": "Smith",
-  "age": 25
+
+manim year.py Year -pqh
+
 }
 ```
