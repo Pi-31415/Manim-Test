@@ -6,7 +6,7 @@ Compile with the following command
 ```
 {
 
-manim year.py Year -pqh
+manim node.py Node -pqh
 
 }
 ```
